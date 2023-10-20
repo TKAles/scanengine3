@@ -1,0 +1,72 @@
+﻿<Window x:Class="scanengine.LaserStatus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:scanengine"
+        mc:Ignorable="d"
+        Title="LaserStatus" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Detection Laser" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" FontSize="18" />
+        <Label Grid.Row="0" Grid.Column="2" Content="Interlock Status" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="0" Grid.Column="3" Content="Laser State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="0" Grid.Column="4" Content="Power Level [mW]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="1" Grid.Column="2" Content="OPEN" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="3" Content="DISABLED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="4" Content="000.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="0" Grid.Column="5" Content="Temperature [C]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="1" Grid.Column="5" Content="0.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="0" Grid.Column="6" Content="Control State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="1" Grid.Column="6" Content="AUTO-IDLE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Generation Laser" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" FontSize="18" />
+        <Label Grid.Row="2" Grid.Column="2" Content="Interlock Status" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="2" Grid.Column="3" Content="Laser State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="2" Grid.Column="4" Content="Diode Current [mA]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="2" Grid.Column="5" Content="Temperature [C]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="2" Grid.Column="6" Content="Control State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
+        <Label Grid.Row="3" Grid.Column="2" Content="OPEN" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="3" Content="DISABLED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="4" Content="000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="5" Content="0.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="6" Content="AUTO-IDLE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+
+        <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="7" VerticalContentAlignment="Top" />
+
+        <Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" Content="Manual / Test Controls" FontSize="18" />
+        <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Content="Detection Controls" FontSize="16" />
+        <Label Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Content="Generation Controls" FontSize="16" />
+        <Label Grid.Row="6" Grid.Column="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Content="Power [mW]:" />
+        <TextBox Grid.Row="6" Grid.Column="1" Margin="0 12 30 12" Text="000" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" Padding="3" />
+        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="25 10" Content="Enable Detection Laser" />
+        <Button Grid.Row="6" Grid.Column="2" Margin="10 10" Content="Set Power Level" />
+        <Label Grid.Row="6" Grid.Column="4" Content="Frequency [Hz]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+        <Label Grid.Row="7" Grid.Column="4" Content="Diode Current [mA]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+        <TextBox Grid.Row="6" Grid.Column="5" Text="20000" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Padding="3" Width="50" />
+        <TextBox Grid.Row="7" Grid.Column="5" Text="750" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center" Padding="3" Width="50" />
+        <Button Grid.Row="6" Grid.Column="6" Content="Set Frequency" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15 10" />
+        <Button Grid.Row="7" Grid.Column="6" Content="Set Current" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="15 10" />
+        <Button Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="3" Margin="25 10" Content="Enable Generation Laser" />
+
+    </Grid>
+</Window>

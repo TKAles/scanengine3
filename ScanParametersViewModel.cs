@@ -212,7 +212,21 @@ namespace scanengine
                 return "No Scan Loaded";
             }
         }
-
+        public string RobometLayersDisplay
+        {
+            get
+            {
+                if(this.ScanLoaded && (this._robometMode == true))
+                {
+                    return String.Format("{0} Layers", this._robometLayers);
+                }
+                if(this.ScanLoaded && (this._robometMode != false))
+                {
+                    return "Standalone Mode Active";
+                }
+                return "No Scan Loaded";
+            }
+        }
         public decimal DetectionPower
         {
             get { return this._DetPower; }

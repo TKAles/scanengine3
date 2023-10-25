@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:scanengine"
         mc:Ignorable="d"
-        Title="KinematicsMonitor" Height="450" Width="500">
+        Title="KinematicsMonitor" Height="450" Width="675">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -52,11 +53,30 @@
         <Label Grid.Row="5" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontSize="20" Content="000&#x00b0;" Name="T3GRPosition" />
         <!--#endregion-->
         <!--#region Other Controls-->
-        <DataGrid Name="TransferSystemDataGrid" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Grid.RowSpan="5" />
-        <Button Name="AddTransferPosition" Grid.Row="11" Grid.Column="1" Margin="6 5" Content="Add Position"/>
-        <Button Name="RemoveTransferPosition" Grid.Row="11" Grid.Column="3" Margin="6 5" Content="Delete Position" />
-        <Button Name="ForceManualCycle" Grid.Row="11" Grid.Column="5" Margin="6 5" Content="Manual Move" />
-        <Button Name="CloseKinematicsWindow" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" Margin="15 5" Content="Close" />
+        <DataGrid Name="TransferSystemDataGrid" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="7" Grid.RowSpan="5" ItemsSource="{Binding Path=ZaberTransferPoints}" AutoGenerateColumns="False" Margin="10 5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Point Description" Binding="{Binding PointDescription}" />
+                <DataGridTextColumn Header="X [mm]" Binding="{Binding XPosition}" />
+                <DataGridTextColumn Header="Y [mm]" Binding="{Binding YPosition}" />
+                <DataGridTextColumn Header="Z [mm]" Binding="{Binding ZPosition}" />
+                <DataGridCheckBoxColumn Header="R3D-RTS" Binding="{Binding RobometRTS}" />
+                <DataGridCheckBoxColumn Header="R3D-RTL" Binding="{Binding RobometRTL}" />
+                <DataGridCheckBoxColumn Header="R3D-ESTOP" Binding="{Binding RobometESTOP}" />
+                <DataGridCheckBoxColumn Header="SReady" Binding="{Binding SRASReady}" />
+                <DataGridCheckBoxColumn Header="SCTL" Binding="{Binding SRASCTL}" />
+                <DataGridCheckBoxColumn Header="SDone" Binding="{Binding SRASDone}" />
+                <DataGridCheckBoxColumn Header="SErr" Binding="{Binding SRASError}" />
+                <DataGridCheckBoxColumn Header="Grip" Binding="{Binding GripperActive}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="AddTransferPosition" Grid.Row="11" Grid.Column="1" Margin="6 5" 
+                Content="Add Position" Click="AddTransferPosition_Click" />
+        <Button Name="RemoveTransferPosition" Grid.Row="11" Grid.Column="3" Margin="6 5"
+                Content="Delete Position" Click="RemoveTransferPosition_Click" />
+        <Button Name="ForceManualCycle" Grid.Row="11" Grid.Column="5" Margin="6 5"
+                Content="Manual Move" Click="ForceManualCycle_Click" />
+        <Button Name="CloseKinematicsWindow" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" 
+                Margin="15 5" Content="Close" Click="CloseKinematicsWindow_Click" />
         <!--#endregion-->
     </Grid>
 </Window>

@@ -96,7 +96,7 @@
                     <Label Grid.Row="6" Grid.Column="0" Content="Scan Speed [mm/s]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
                     <Label Grid.Row="6" Grid.Column="1" Content="{Binding ScanVelocityDisplay}" />
                     <Label Grid.Row="7" Grid.Column="0" Content="Robomet Campaign Mode:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="7" Grid.Column="1" Content="{Binding RobometModeDisplay}" />
+                    <Label Grid.Row="7" Grid.Column="1" Content="{Binding RobometCampaignDisplay}" />
                     <Label Grid.Row="8" Grid.Column="0" Content="Layers in Campaign:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
                     <Label Grid.Row="8" Grid.Column="1" Content="{Binding RobometLayersDisplay}" />
                 </Grid>

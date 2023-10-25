@@ -6,25 +6,27 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Zaber.Motion;
 
 namespace scanengine
 {
     public struct TransferPoint
     {
-        public decimal XPosition;
-        public decimal YPosition;
-        public decimal ZPosition;
-        public bool RobometRTS;
-        public bool RobometRTL;
-        public bool RobometESTOP;
-        public bool SRASReady;
-        public bool SRASCTL;
-        public bool SRASDone;
-        public bool SRASError;
-        public bool GripperActive;
+        public string PointDescription { get; set; }
+        public decimal XPosition { get; set; }
+        public decimal YPosition { get; set; }
+        public decimal ZPosition { get; set; }
+        public bool RobometRTS { get; set; }
+        public bool RobometRTL { get; set; }
+        public bool RobometESTOP { get; set; }
+        public bool SRASReady { get; set; }
+        public bool SRASCTL { get; set; }
+        public bool SRASDone { get; set; }
+        public bool SRASError { get; set; }
+        public bool GripperActive { get; set; }
 
     }
-    internal class RobometTransferSystem : INotifyPropertyChanged
+    public class RobometTransferSystem : INotifyPropertyChanged
     {
         public ObservableCollection<TransferPoint> transferPoints = new ObservableCollection<TransferPoint>();
         public event PropertyChangedEventHandler PropertyChanged;
@@ -68,7 +70,7 @@ namespace scanengine
             set { this.z_pos = value; NotifyPropertyChanged(); }
         }
         
-        public string ZaberCOMPort
+        public 1string ZaberCOMPort
         {
             get { return this.zaber_com_port; }
             set { this.zaber_com_port = value; NotifyPropertyChanged(); }
@@ -83,6 +85,11 @@ namespace scanengine
         private string zaber_com_port;
 
         public RobometTransferSystem()
+        {
+            
+        }
+
+        public void InitializeConnection()
         {
 
         }

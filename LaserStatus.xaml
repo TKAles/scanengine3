@@ -31,13 +31,13 @@
         <Label Grid.Row="0" Grid.Column="2" Content="Interlock Status" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
         <Label Grid.Row="0" Grid.Column="3" Content="Laser State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
         <Label Grid.Row="0" Grid.Column="4" Content="Power Level [mW]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
-        <Label Grid.Row="1" Grid.Column="2" Content="OPEN" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="1" Grid.Column="3" Content="DISABLED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="1" Grid.Column="4" Content="000.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="2" Content="{Binding lsGenesisInterlock}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="3" Content="{Binding lsGenesisState}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="4" Content="{Binding lsGenesisPower}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
         <Label Grid.Row="0" Grid.Column="5" Content="Temperature [C]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
-        <Label Grid.Row="1" Grid.Column="5" Content="0.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="5" Content="{Binding lsGenesisTemp}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
         <Label Grid.Row="0" Grid.Column="6" Content="Control State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
-        <Label Grid.Row="1" Grid.Column="6" Content="AUTO-IDLE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="1" Grid.Column="6" Content="{Binding lsGenesisCState}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
 
         <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Generation Laser" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" FontSize="18" />
         <Label Grid.Row="2" Grid.Column="2" Content="Interlock Status" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
@@ -45,14 +45,12 @@
         <Label Grid.Row="2" Grid.Column="4" Content="Diode Current [mA]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
         <Label Grid.Row="2" Grid.Column="5" Content="Temperature [C]" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
         <Label Grid.Row="2" Grid.Column="6" Content="Control State" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" />
-        <Label Grid.Row="3" Grid.Column="2" Content="OPEN" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="3" Grid.Column="3" Content="DISABLED" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="3" Grid.Column="4" Content="000" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="3" Grid.Column="5" Content="0.0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-        <Label Grid.Row="3" Grid.Column="6" Content="AUTO-IDLE" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
-
-        <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="7" VerticalContentAlignment="Top" />
-
+        <Label Grid.Row="3" Grid.Column="2" Content="{Binding lsHeliosInterlock}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="3" Content="{Binding lsHeliosState}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="4" Content="{Binding lsHeliosCurrent}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="5" Content="{Binding lsHeliosTemp}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+        <Label Grid.Row="3" Grid.Column="6" Content="{Binding lsHeliosCState}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" />
+    
         <Label Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" Content="Manual / Test Controls" FontSize="18" />
         <Label Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Content="Detection Controls" FontSize="16" />
         <Label Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Content="Generation Controls" FontSize="16" />

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:scanengine"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Loaded="Window_Loaded"
         Title="ScanEngine" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -53,17 +53,17 @@
             <Label Grid.Column="5" Grid.Row="5" Content="T3R" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
             <Label Grid.Column="5" Grid.Row="6" Content="Robo-Met.3D" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" />
             <!-- Subsystem Labels -->
-            <Label Grid.Column="6" Grid.Row="1" Name="MLS203StateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Label Grid.Column="6" Grid.Row="2" Name="ZaberStateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Label Grid.Column="6" Grid.Row="3" Name="HeliosStateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Label Grid.Column="6" Grid.Row="4" Name="GenesisStateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Label Grid.Column="6" Grid.Row="5" Name="T3RStateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Label Grid.Column="6" Grid.Row="6" Name="R3DStateLabel" Content="No Connection" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="1" Name="MLS203StateLabel" Content="{Binding mwMLSStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="2" Name="ZaberStateLabel" Content="{Binding mwZaberStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="3" Name="HeliosStateLabel" Content="{Binding mwHeliosStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="4" Name="GenesisStateLabel" Content="{Binding mwGenesisStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="5" Name="T3RStateLabel" Content="{Binding mwT3RStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Label Grid.Column="6" Grid.Row="6" Name="R3DStateLabel" Content="{Binding mwR3DStatus}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
             <!--#endregion-->
 
             <Button Grid.Row="1" Grid.Column="0" Margin="5" Content="Create Scan JSON" />
             <Button Grid.Row="2" Grid.Column="0" Margin="5" Content="Load Scan JSON" Click="LoadScanJSON_Click" />
-            <Button Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" Content="Begin Scan / Campaign" Margin="5" />
+            <Button Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" Content="Begin Scan / Campaign" Margin="5" Visibility="Hidden" />
             <GroupBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Grid.RowSpan="7" Header="Scan Information">
                 <Grid Name="DetailGrid" IsEnabled="False">
                     <Grid.RowDefinitions>
@@ -82,25 +82,28 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Start Position [mm]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding OriginDisplay}" />
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding mwStartPosition}" />
                     <Label Grid.Row="1" Grid.Column="0" Content="Scan Size [mm]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding ScanSizeDisplay}" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding mwScanSize}" />
                     <Label Grid.Row="2" Grid.Column="0" Content="Stepover Distance [mm]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding StepDistanceDisplay}" />
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding mwStepDistance}" />
                     <Label Grid.Row="3" Grid.Column="0" Content="Pixel Size [mm]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding PixelSizeDisplay}" />
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding mwPixelSize}" />
                     <Label Grid.Row="4" Grid.Column="0" Content="# of Angles:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding AngleDisplay}" />
+                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding mwAnglesInScan}" />
                     <Label Grid.Row="5" Grid.Column="0" Content="Detection Laser Power [mW]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding LaserPowerDisplay}" />
+                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding mwDetectionPower}" />
                     <Label Grid.Row="6" Grid.Column="0" Content="Scan Speed [mm/s]:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="6" Grid.Column="1" Content="{Binding ScanVelocityDisplay}" />
+                    <Label Grid.Row="6" Grid.Column="1" Content="{Binding mwScanSpeed}" />
                     <Label Grid.Row="7" Grid.Column="0" Content="Robomet Campaign Mode:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="7" Grid.Column="1" Content="{Binding RobometCampaignDisplay}" />
+                    <Label Grid.Row="7" Grid.Column="1" Content="{Binding mwRobometMode}" />
                     <Label Grid.Row="8" Grid.Column="0" Content="Layers in Campaign:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontSize="10" />
-                    <Label Grid.Row="8" Grid.Column="1" Content="{Binding RobometLayersDisplay}" />
+                    <Label Grid.Row="8" Grid.Column="1" Content="{Binding mwRobometLayers}" />
+
                 </Grid>
             </GroupBox>
+            <ProgressBar Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="5" Margin="5 8" Visibility="Hidden" />
         </Grid>
     </DockPanel>
+        
 </Window>

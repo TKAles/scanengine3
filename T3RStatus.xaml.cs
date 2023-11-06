@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace scanengine
 {
     /// <summary>
-    /// Interaction logic for KinematicsMonitor.xaml
+    /// Interaction logic for T3RStatus.xaml
     /// </summary>
-    public partial class KinematicsMonitor : Window
+    public partial class T3RStatus : Window
     {
-        public KinematicsMonitor()
+        public T3RStatus()
         {
             InitializeComponent();
-             
-            // Subscribe the viewmodel to the transfer system
-            // daemon.
-            
         }
-
     }
 }

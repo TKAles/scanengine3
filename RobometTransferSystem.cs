@@ -70,7 +70,7 @@ namespace scanengine
             set { this.z_pos = value; NotifyPropertyChanged(); }
         }
         
-        public 1string ZaberCOMPort
+        public string ZaberCOMPort
         {
             get { return this.zaber_com_port; }
             set { this.zaber_com_port = value; NotifyPropertyChanged(); }

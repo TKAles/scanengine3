@@ -14,15 +14,21 @@ namespace scanengine
     {
         KinematicsMonitor KinematicsWindow = new KinematicsMonitor();
         LaserStatus LaserWindow = new LaserStatus();
-        ScanParametersViewModel ScanDescriptionVM = new();
+        T3RStatus T3RWindow = new T3RStatus();
         ScanSpecificationJSON CurrentScanSpec;
+        // New Monolithic View Model to hopefully
+        // make life easier ?? 
+
+        MonoVM ApplicationVM = new MonoVM();
+        
         public MainWindow()
         {
             InitializeComponent();
             // Initialize the other windows
-            this.KinematicsWindow.Hide();
-            this.LaserWindow.Hide();
-            this.DataContext = this.ScanDescriptionVM;
+            this.DataContext = this.ApplicationVM;
+            this.KinematicsWindow.DataContext = this.ApplicationVM;
+            this.LaserWindow.DataContext = this.ApplicationVM;
+            this.T3RWindow.DataContext = this.ApplicationVM;
         }
 
         private void LaserStatus_Click(object sender, RoutedEventArgs e)
@@ -76,11 +82,26 @@ namespace scanengine
                     MessageBox.Show("This is not a version 3 JSON file. Please translate the file into v3 format.",
                                     "Not a V3 File!", 
                                     MessageBoxButton.OK, MessageBoxImage.Error);
-                    this.ScanDescriptionVM.ScanLoaded = false;
                     this.DetailGrid.IsEnabled = false;
                     return;
                     
                 }
+                // Parse information from the JSON file into the viewmodel.
+                ApplicationVM.mwStartPosition = string.Format("{0:00.000}mm, {1:00.000}mm", this.CurrentScanSpec.ScanOriginX,
+                    this.CurrentScanSpec.ScanOriginY);
+                ApplicationVM.mwScanSize = string.Format("{0:00.000}mm x {1:00.000}mm",
+                    this.CurrentScanSpec.ScanDeltaX, this.CurrentScanSpec.ScanDeltaY);
+                ApplicationVM.mwStepDistance = string.Format("{0:0.000}mm", this.CurrentScanSpec.RowStepSize);
+                ApplicationVM.mwPixelSize = string.Format("{0:0.000}mm x {1:0.000}mm per px",
+                    (this.CurrentScanSpec.ScanVelocity /
+                    (this.CurrentScanSpec.HeliosFrequency / this.CurrentScanSpec.DividerValue)), this.CurrentScanSpec.RowStepSize);
+                ApplicationVM.mwAnglesInScan = string.Format("{0} angles", this.CurrentScanSpec.AnglesInScan);
+                ApplicationVM.mwDetectionPower = string.Format("{0:00.0}mW", this.CurrentScanSpec.DetectionPower);
+                ApplicationVM.mwScanSpeed = string.Format("{0:00.0}mm/s", this.CurrentScanSpec.ScanVelocity);
+                ApplicationVM.mwRobometMode = this.CurrentScanSpec.IsRobometCampaign ? "Active" : "Standalone Mode";
+                ApplicationVM.mwRobometLayers = string.Format("{0:0} Layers", this.CurrentScanSpec.RobometLayers);
+                
+                /*
                 this.ScanDescriptionVM.ScanLoaded = true;
                 // Load relevant display information about the scan into the view
                 // model for the main display.
@@ -103,7 +124,23 @@ namespace scanengine
                 this.ScanDescriptionVM.DetectionPower = this.CurrentScanSpec.DetectionPower;
                 this.ScanDescriptionVM.RobometMode = this.CurrentScanSpec.IsRobometCampaign;
                 this.ScanDescriptionVM.RobometLayers = this.CurrentScanSpec.RobometLayers;
+                */
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Left = 5;
+            this.Top = 5;
+            this.KinematicsWindow.Show();
+            this.KinematicsWindow.Top = this.Top;
+            this.KinematicsWindow.Left = this.Width + this.Left + 5;
+            this.T3RWindow.Top = this.Top + this.Height + 5;
+            this.T3RWindow.Left = this.Left + this.LaserWindow.Width + 5;
+            this.T3RWindow.Show();
+            this.LaserWindow.Top = this.Top + this.Height + 5;
+            this.LaserWindow.Left = this.Left;
+            this.LaserWindow.Show();
         }
     }
 }

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IO.Ports" Version="7.0.0" />
     <PackageReference Include="Zaber.Motion" Version="4.5.1" />
   </ItemGroup>
 

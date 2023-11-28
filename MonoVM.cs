@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace scanengine
 {
-    internal class MonoVM : INotifyPropertyChanged
+    public class MonoVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string mwStartPosition

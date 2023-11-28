@@ -2,8 +2,14 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Text.Json;
+using System.Threading;
 using System.Text.Json.Serialization;
 using System.IO;
+using System.Windows.Threading;
+using System;
+using Google.Protobuf.WellKnownTypes;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace scanengine
 {
@@ -12,15 +18,22 @@ namespace scanengine
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Windows
         KinematicsMonitor KinematicsWindow = new KinematicsMonitor();
         LaserStatus LaserWindow = new LaserStatus();
         T3RStatus T3RWindow = new T3RStatus();
+        // JSON Container for Scan Parameters requested by end-user.
         ScanSpecificationJSON CurrentScanSpec;
         // New Monolithic View Model to hopefully
         // make life easier ?? 
 
         MonoVM ApplicationVM = new MonoVM();
-        
+        ScanOrchestrator ScanControlLogic;
+        // Timer for updating information between Scan Logic and View Model
+        DispatcherTimer UILinkTimer;
+        DispatcherTimer UIKinematicsTimer;
+
+        int UILinkUpdateInterval = 500;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,8 +42,54 @@ namespace scanengine
             this.KinematicsWindow.DataContext = this.ApplicationVM;
             this.LaserWindow.DataContext = this.ApplicationVM;
             this.T3RWindow.DataContext = this.ApplicationVM;
+            UILinkTimer = new DispatcherTimer();
+            UILinkTimer.Interval = TimeSpan.FromMilliseconds(UILinkUpdateInterval);
+            UILinkTimer.Tick += new EventHandler(UpdateUILinks);
+            UIKinematicsTimer = new DispatcherTimer();
+            UIKinematicsTimer.Interval = TimeSpan.FromMilliseconds(100);
+            UIKinematicsTimer.Tick += new EventHandler(UpdateMLSUI);
+            ScanControlLogic = new ScanOrchestrator(ref ApplicationVM);
+            ScanControlLogic.R3DXferSystem.LoadTransferPoints(ref this.ApplicationVM);
+            
         }
 
+        private void UpdateUILinks(object sender, EventArgs e)
+        {
+            // Update the Subsystem statuses
+            ApplicationVM.mwMLSStatus = ScanControlLogic.MLSConnected ? 
+                                        ScanControlLogic.MxStageSerial + " OK" : "Not Connected";
+            ApplicationVM.mwZaberStatus = ScanControlLogic.ZaberConnected ?
+                                        ScanControlLogic.ZaberCOMPort + " OK" : "Not Connected";
+            ApplicationVM.mwHeliosStatus = ScanControlLogic.HeliosConnected ?
+               CurrentScanSpec.HeliosCOMPort + " OK" : "Not Connected";
+            ApplicationVM.mwGenesisStatus = ScanControlLogic.GenesisConnected ?
+                "OK" : "Not Connected";
+            ApplicationVM.mwT3RStatus = ScanControlLogic.T3RConnected ?
+                "OK" : "Not Connected";
+            ApplicationVM.mwR3DStatus = ScanControlLogic.R3DConnected ?
+                "OK" : "Not Connected";
+        }
+
+        private void UpdateMLSUI(object sender, EventArgs e)
+        {
+            if(ScanControlLogic.MLSConnected)
+            { 
+                ApplicationVM.kmMLSX = ScanControlLogic.MxStageController.XAxis.Position.ToString("F2");
+                ApplicationVM.kmMLSY = ScanControlLogic.MxStageController.YAxis.Position.ToString("F2");
+            }
+            if(ScanControlLogic.R3DXferSystem.IsConnected)
+            {
+                ApplicationVM.kmZaberX = ScanControlLogic.R3DXferSystem
+                                        .XAxis.GetPosition(Zaber.Motion.Units.Length_Millimetres)
+                                        .ToString("F2");
+                ApplicationVM.kmZaberY = ScanControlLogic.R3DXferSystem
+                                        .YAxis.GetPosition(Zaber.Motion.Units.Length_Millimetres)
+                                        .ToString("F2");
+                ApplicationVM.kmZaberZ = ScanControlLogic.R3DXferSystem
+                                        .ZAxis.GetPosition(Zaber.Motion.Units.Length_Millimetres)
+                                        .ToString("F2");
+            }
+        }
         private void LaserStatus_Click(object sender, RoutedEventArgs e)
         {
             if(this.LaserWindow.IsVisible == false)
@@ -86,6 +145,7 @@ namespace scanengine
                     return;
                     
                 }
+                UILinkTimer.Start();
                 // Parse information from the JSON file into the viewmodel.
                 ApplicationVM.mwStartPosition = string.Format("{0:00.000}mm, {1:00.000}mm", this.CurrentScanSpec.ScanOriginX,
                     this.CurrentScanSpec.ScanOriginY);
@@ -100,31 +160,21 @@ namespace scanengine
                 ApplicationVM.mwScanSpeed = string.Format("{0:00.0}mm/s", this.CurrentScanSpec.ScanVelocity);
                 ApplicationVM.mwRobometMode = this.CurrentScanSpec.IsRobometCampaign ? "Active" : "Standalone Mode";
                 ApplicationVM.mwRobometLayers = string.Format("{0:0} Layers", this.CurrentScanSpec.RobometLayers);
-                
-                /*
-                this.ScanDescriptionVM.ScanLoaded = true;
-                // Load relevant display information about the scan into the view
-                // model for the main display.
-                this.ScanDescriptionVM.XOrigin = this.CurrentScanSpec.ScanOriginX;
-                this.ScanDescriptionVM.YOrigin = this.CurrentScanSpec.ScanOriginY;
-                this.ScanDescriptionVM.XDelta = this.CurrentScanSpec.ScanDeltaX;
-                this.ScanDescriptionVM.YDelta = this.CurrentScanSpec.ScanDeltaY;
-                this.ScanDescriptionVM.RowDelta = this.CurrentScanSpec.RowStepSize;
-                this.ScanDescriptionVM.THORSerialNumber = this.CurrentScanSpec.THORSerialNumber;
-                this.ScanDescriptionVM.HeliosCOMPort = this.CurrentScanSpec.HeliosCOMPort;
-                this.ScanDescriptionVM.T3RCOMPort = this.CurrentScanSpec.T3COMPort;
-                this.ScanDescriptionVM.ZaberCOMPort = this.CurrentScanSpec.ZaberPort;
-                this.ScanDescriptionVM.EffectiveFrequency = (this.CurrentScanSpec.HeliosFrequency /
-                                                             this.CurrentScanSpec.DividerValue);
-                this.ScanDescriptionVM.ScanVelocity = this.CurrentScanSpec.ScanVelocity;
-                this.ScanDescriptionVM.RobometMode = this.CurrentScanSpec.IsRobometCampaign;
-                this.ScanDescriptionVM.RobometLayers = this.CurrentScanSpec.RobometLayers;
-                this.ScanDescriptionVM.NumAngles = this.CurrentScanSpec.AnglesInScan;
-                this.ScanDescriptionVM.NumSteps = (int)this.CurrentScanSpec.StepsPerAngle;
-                this.ScanDescriptionVM.DetectionPower = this.CurrentScanSpec.DetectionPower;
-                this.ScanDescriptionVM.RobometMode = this.CurrentScanSpec.IsRobometCampaign;
-                this.ScanDescriptionVM.RobometLayers = this.CurrentScanSpec.RobometLayers;
-                */
+                ScanControlLogic.MxStageSerial = CurrentScanSpec.THORSerialNumber;
+                ScanControlLogic.ZaberCOMPort = CurrentScanSpec.ZaberPort;
+                ScanControlLogic.HeliosCOM = CurrentScanSpec.HeliosCOMPort;
+                Task.Run(() =>
+                {
+                    ScanControlLogic.ToggleMicroscopeConnection();
+                    Thread.Sleep(500);
+                    UIKinematicsTimer.Start();
+                });
+
+                ScanControlLogic.ZaberCOMPort = CurrentScanSpec.ZaberPort;
+                Task.Run(() => {
+                    ScanControlLogic.ToggleTransferConnection();
+                    ScanControlLogic.GetHeliosStatus();
+                });
             }
         }
 
@@ -141,6 +191,7 @@ namespace scanengine
             this.LaserWindow.Top = this.Top + this.Height + 5;
             this.LaserWindow.Left = this.Left;
             this.LaserWindow.Show();
+            this.ScanControlLogic.R3DXferSystem.LoadTransferPoints(ref this.ApplicationVM);
         }
     }
 }

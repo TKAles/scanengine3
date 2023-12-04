@@ -8,4 +8,35 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Zaber.Motion" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Thorlabs.MotionControl.Benchtop.BrushlessMotorCLI">
+      <HintPath>Thorlabs.MotionControl.Benchtop.BrushlessMotorCLI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.Benchtop.BrushlessMotorUI">
+      <HintPath>Thorlabs.MotionControl.Benchtop.BrushlessMotorUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.DeviceManagerCLI">
+      <HintPath>Thorlabs.MotionControl.DeviceManagerCLI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.DeviceManagerUI">
+      <HintPath>Thorlabs.MotionControl.DeviceManagerUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.GenericMotorCLI">
+      <HintPath>Thorlabs.MotionControl.GenericMotorCLI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.GenericMotorUI">
+      <HintPath>Thorlabs.MotionControl.GenericMotorUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.Tools.WPF">
+      <HintPath>Thorlabs.MotionControl.Tools.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.MotionControl.Tools.WPF.UI">
+      <HintPath>Thorlabs.MotionControl.Tools.WPF.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

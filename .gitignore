@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Thorlabs.MotionControl.Benchtop.BrushlessMotor.dll
+/Thorlabs.MotionControl.Benchtop.BrushlessMotorCLI.dll
+/Thorlabs.MotionControl.Benchtop.BrushlessMotorUI.dll
+/Thorlabs.MotionControl.DeviceManager.dll
+/Thorlabs.MotionControl.DeviceManagerCLI.dll
+/Thorlabs.MotionControl.DeviceManagerUI.dll
+/Thorlabs.MotionControl.GenericMotorCLI.dll
+/Thorlabs.MotionControl.GenericMotorUI.dll
+/Thorlabs.MotionControl.PrivateInternal.dll
+/Thorlabs.MotionControl.Tools.Common.dll
+/Thorlabs.MotionControl.Tools.Logging.dll
+/Thorlabs.MotionControl.Tools.WPF.dll
+/Thorlabs.MotionControl.Tools.WPF.UI.dll
+/Xceed.Wpf.Toolkit.dll
